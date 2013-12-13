@@ -11,6 +11,10 @@ import javax.jms.TopicSession
 import javax.jms.TopicSubscriber
 import javax.naming.Context
 import javax.naming.InitialContext
+import javax.net.ssl.KeyManager
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import java.security.SecureRandom
 
 class TopicClient {
 
@@ -28,7 +32,6 @@ class TopicClient {
         System.out.println(String.format("URL: %s", conf.url))
         System.out.println(String.format("Connection Factory: %s", conf.connectionFactory))
         System.out.println(String.format("Initial Context Factory: %s", conf.initialContextFactory))
-        System.out.println(String.format("Keystore Path: %s", conf.keystorePath))
         System.out.println()
 
         this.startMonitoringJmsTopic()
@@ -49,8 +52,7 @@ class TopicClient {
     }
 
     def startMonitoringJmsTopic() {
-        System.setProperty("javax.net.ssl.trustStore", conf.keystorePath)
-        System.setProperty("javax.net.ssl.trustStorePassword", conf.keystorePass)
+        this.ignoreSSLCertificateErrors()
         Properties props = new Properties()
         props.put(Context.INITIAL_CONTEXT_FACTORY, conf.initialContextFactory)
         props.put(Context.PROVIDER_URL, conf.url)
@@ -66,6 +68,13 @@ class TopicClient {
         connection.start()
         MessageListener listener = new TopicMessageListener();
         subscriber.setMessageListener(listener);
+    }
+
+
+    def private ignoreSSLCertificateErrors() throws Exception {
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(new KeyManager[0], [new SSLManager()] as TrustManager[], new SecureRandom());
+        SSLContext.setDefault(sslContext);
     }
 
     def closeConnections() {

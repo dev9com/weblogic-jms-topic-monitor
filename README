@@ -1,15 +1,1 @@
-1) Make sure you update application.conf with the correct paths and destination names.
-2) If you're having authentication issues you may need to set up a keystore.
-    Here are the steps:
-
-    Download and install openSSL: http://www.openssl.org/
-    Open up the site in Internet Explorer and save the certificate as a Base-64 Encoded .cer (ex: example.cer)
-
-    Then you need to convert to a .der certificate with the following command:
-        openssl x509 -in example.cer -out example.der -outform DER
-
-    Then finally add it to your keystore:
-        keytool -import -alias example -file c:\users\yourname\desktop\example.der -keystore "keystore.jks"
-
-    Copy this keystore to your project somewhere and update the keystorePath and keystorePass in your application.conf
-
+Make sure you update application.conf with the correct paths and destination names.

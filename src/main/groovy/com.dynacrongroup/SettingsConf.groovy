@@ -28,12 +28,6 @@ class SettingsConf {
     @Valid
     private String initialContextFactory
 
-    @Valid
-    private String keystorePath
-
-    @Valid
-    private String keystorePass
-
     public static SettingsConf getSoleInstance() {
         return SETTINGS_CONF;
     }
@@ -52,14 +46,6 @@ class SettingsConf {
 
     def String getInitialContextFactory() {
         return initialContextFactory
-    }
-
-    def String getKeystorePath() {
-        return keystorePath
-    }
-
-    def String getKeystorePass() {
-        return keystorePass
     }
 
     private static ObjectMapper buildObjectMapper() {
