@@ -1,4 +1,4 @@
-package com.dynacrongroup
+package com.dev9
 
 import javax.net.ssl.X509TrustManager
 import java.security.cert.CertificateException

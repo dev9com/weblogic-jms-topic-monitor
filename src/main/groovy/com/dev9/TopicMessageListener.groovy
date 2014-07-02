@@ -1,4 +1,4 @@
-package com.dynacrongroup
+package com.dev9
 
 import javax.jms.Message
 import javax.jms.MessageListener
